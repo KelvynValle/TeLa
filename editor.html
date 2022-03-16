@@ -1,0 +1,310 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
+            margin: 0;
+            width: 100vw;
+        }
+        
+        header {
+            float: left;
+            position: relative;
+            width: 100vw;
+            height: 7vh;
+        }
+        
+        select {
+            float: left;
+            position: relative;
+            min-width: 100px;
+            border: none;
+            padding: 9px;
+            background-color: white;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+        }
+        
+        .container-editor {
+            float: left;
+            position: relative;
+            width: 80vw;
+            height: 90vh;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.025));
+        }
+        
+        .phone {
+            float: left;
+            position: relative;
+            background-color: white;
+        }
+        
+        aside {
+            float: left;
+            position: relative;
+            width: 19vw;
+            margin: 0;
+            height: 90vh;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+        
+        aside input {
+            float: left;
+            position: relative;
+            width: 100px;
+            border: none;
+            padding: 9px;
+            background-color: white;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+        }
+        
+        .editor-title {
+            float: left;
+            position: relative;
+            width: 80%;
+            padding: 3px;
+            font-size: 12px;
+            margin-top: 3px;
+            border-radius: 20px;
+            text-align: center;
+            color: rgb(90, 90, 90);
+            font-family: arial;
+            opacity: 1;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .editor-button {
+            float: left;
+            position: relative;
+            left: 10%;
+            width: 80%;
+            padding: 3px;
+            font-size: 12px;
+            margin-top: 3px;
+            border-radius: 20px;
+            background: linear-gradient(45deg, rgb(0, 100, 200), rgb(50, 150, 250));
+            text-align: center;
+            color: white;
+            font-family: arial;
+            opacity: 1;
+        }
+        
+        .editor-button:hover {
+            opacity: 0.6;
+            cursor: pointer;
+        }
+        
+        .edition {
+            position: absolute;
+            float: left;
+        }
+        
+        .selected {
+            z-index: 100;
+        }
+        
+        #bounding-box {
+            float: left;
+            position: absolute;
+            border-style: dashed;
+            z-index: 0;
+            display: none;
+        }
+        
+        .control-box {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: black;
+            cursor: pointer;
+        }
+        
+        .left-side {
+            float: left;
+            left: -15px;
+            top: calc(50% - 5px);
+        }
+        
+        .right-side {
+            float: right;
+            right: -15px;
+            top: calc(50% - 5px);
+        }
+        
+        .top-side {
+            float: left;
+            top: -15px;
+            left: calc(50% - 5px);
+        }
+        
+        .bottom-side {
+            float: left;
+            bottom: -15px;
+            left: calc(50% - 5px);
+        }
+        
+        .label-description {
+            float: left;
+            position: relative;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 7vh;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        
+        input[type="color"] {
+            float: left;
+            position: relative;
+            width: 5vh;
+            height: 5vh;
+            top: 1vh;
+            margin-left: 1vh;
+        }
+    </style>
+    <script>
+    </script>
+    <script src="virtualizer.js"></script>
+    <script src="editor.js"></script>
+    <script src="compiller.js"></script>
+    <script src="interpreter.js"></script>
+</head>
+
+<body>
+    <main>
+
+        <header>
+            <label class="label-description">Screen dimension:</label>
+            <select id='phone-dimension' onchange='changeDimension(this.value);'>
+                <option disabled selected>Dimensões (mm)</option>
+                <option value='{"width":64, "height":129}'>64 x 129</option>
+                <option value='{"width":73.4, "height":148}'>73.4 x 148</option>
+                <option value='{"width":68.1, "height":148.9}'>68.1 x 148.9</option>
+                <option value='{"width":73.4, "height":159.5}'>73.4 x 159.5</option>
+                <option value='{"width":76.2, "height":153.5}'>76.2 x 153.5</option>
+                <option value='{"width":75, "height":151.7}'>75 x 151.7</option>
+                <option value='{"width":58.6, "height":123.8}'>58.6 x 123.8</option>
+                <option value='{"width":67.1, "height":138.3}'>67.1 x 138.3</option>
+                <option value='{"width":77.9, "height":158.2}'>77.9 x 158.2</option>
+                <option value='{"width":70.7, "height":141.5}'>70.7 x 141.5</option>
+                <option value='{"width":69.8, "height":136.6}'>69.8 x 136.6</option>
+                <option value='{"width":65.9, "height":129.9}'>65.9 x 129.9</option>
+                <option value='{"width":66.1, "height":125.3}'>66.1 x 125.3</option>
+                <option value='{"width":58.6, "height":115.2}'>58.6 x 115.2</option>
+                </select>
+            <label class="label-description">Default unit:</label>
+            <select>
+                    <option value="0">various</option>
+                    <option value="1">px</option>
+                    <option value="2">%</option>
+                </select>
+            <label class="label-description">Color pallete:</label>
+            <input type="color" id="c1" />
+            <input type="color" id="c2" />
+            <input type="color" id="c3" />
+            <input type="color" id="c4" />
+        </header>
+        <section>
+            <div class="container-editor">
+                <div class='phone' id='global' onclick="selectGlobal(event);" onmousedown="setRedimension(event);" onmouseup="setRedimension(event);" onmousemove="redimension(event);"></div>
+            </div>
+            <aside>
+                <label class="editor-title">Pre-defined elements</label>
+                <div class="editor-button">Banner</div>
+                <div class="editor-button">Profile pic</div>
+                <div class="editor-button">Company title</div>
+                <div class="editor-button">Subtitle</div>
+                <div class="editor-button">Dish template</div>
+                <div class="editor-button">Dish title</div>
+                <div class="editor-button">Dish pic</div>
+                <div class="editor-button">Dish description</div>
+                <label class="editor-title">Bare elements</label>
+                <div class="editor-button" onclick="addObj('container');">Container</div>
+                <div class="editor-button" onclick="addObj('image');">Image</div>
+                <div class="editor-button" onclick="addObj('button');">Button</div>
+                <div class="editor-button" onclick="addObj('form');">Form</div>
+                <div class="editor-button" onclick="addObj('text');">Text</div>
+                <div class="editor-button" onclick="addObj('label');">Label</div>
+                <div class="editor-button" onclick="addObj('select');">Select</div>
+                <div class="editor-button" onclick="addObj('option');">Option</div>
+                <div class="editor-button" onclick="addObj('template');">Template</div>
+                <table>
+                    <thead>
+                        <th>Property</th>
+                        <th>Value</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td><input type=text id="name-txt" disabled/></td>
+                        </tr>
+                        <tr>
+                            <td>Align</td>
+                            <td><input type=text id="align-txt" onkeyup="changeSelected('align', this.value);" /></td>
+                        </tr>
+                        <tr>
+                            <td>Background</td>
+                            <td><input type=text id="background-txt" onkeyup="changeSelected('background', this.value);" /></td>
+                        </tr>
+                        <tr>
+                            <td>Border</td>
+                            <td><input type=text id="border-txt" onkeyup="changeSelected('border', this.value);" /></td>
+                        </tr>
+                        <tr>
+                            <td>Color</td>
+                            <td><input type=text id="color-txt" onkeyup="changeSelected('color', this.value);" /></td>
+                        </tr>
+                        <tr>
+                            <td>Font</td>
+                            <td><input type=text id="font-txt" onkeyup="changeSelected('font', this.value);" /></td>
+                        </tr>
+                        <tr>
+                            <td>Gradient</td>
+                            <td><input type=text id="gradient-txt" onkeyup="changeSelected('gradient', this.value);" /></td>
+                        </tr>
+                        <tr>
+                            <td>Height</td>
+                            <td><input type=text id="height-txt" onkeyup="changeSelected('height', this.value);" /></td>
+                        </tr>
+                        <tr>
+                            <td>Left</td>
+                            <td><input type=text id="left-txt" onkeyup="changeSelected('left', this.value);" /></td>
+                        </tr>
+                        <tr>
+                            <td>Margin</td>
+                            <td><input type=text id="margin-txt" onkeyup="changeSelected('margin', this.value);" /></td>
+                        </tr>
+                        <tr>
+                            <td>Round</td>
+                            <td><input type=text id="round-txt" onkeyup="changeSelected('round', this.value);" /></td>
+                        </tr>
+                        <tr>
+                            <td>Shadow</td>
+                            <td><input type=text id="shadow-txt" onkeyup="changeSelected('shadow', this.value);" /></td>
+                        </tr>
+                        <tr>
+                            <td>Top</td>
+                            <td><input type=text id="top-txt" onkeyup="changeSelected('top', this.value);" /></td>
+                        </tr>
+                        <tr>
+                            <td>Value</td>
+                            <td><input type=text id="value-txt" onkeyup="changeSelected('value', this.value);" /></td>
+                        </tr>
+                        <tr>
+                            <td>Width</td>
+                            <td><input type=text id="width-txt" onkeyup="changeSelected('width', this.value);" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </aside>
+        </section>
+    </main>
+</body>
+
+</html>
