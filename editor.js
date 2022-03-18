@@ -240,17 +240,25 @@ function setRedimension(e) {
 
 var start_point_redimension = { x: 0, y: 0 };
 
+function getDimensions(obj) {
+    var top = obj.clientT
+}
+
 
 function showBox() {
     var obj = document.getElementsByClassName("selected");
-    var top = obj[0].style.top;
-    var left = obj[0].style.left;
+    var my = obj[0].getBoundingClientRect();
+    var global = document.getElementById("global").getBoundingClientRect();
+
+    var top = my.top - global.top;
+    var left = my.left - global.left;
     var width = obj[0].style.width;
     var height = obj[0].style.height;
+
     var bb = document.getElementById("bounding-box");
     bb.style.display = "block";
-    bb.style.top = `calc(${top} - 10px)`;
-    bb.style.left = `calc(${left} - 10px)`;
+    bb.style.top = `calc(${top}px - 10px)`;
+    bb.style.left = `calc(${left}px - 10px)`;
     bb.style.width = `calc(${width} + 15px)`;
     bb.style.height = `calc(${height} + 15px)`;
 }
@@ -278,7 +286,7 @@ function changeSelected(obj_property, property_value) {
 function dragDown(e) {
     obj = e.target;
     var box = obj.getBoundingClientRect();
-    var box_fone = document.getElementById("global").getBoundingClientRect();
+    var box_fone = obj.parentElement.getBoundingClientRect();
     init_location = { top: box.top - box_fone.top, left: box.left - box_fone.left };
     obj_size = { height: obj.clientHeight, width: obj.clientWidth }
     init = { x: e.clientX, y: e.clientY };

@@ -167,6 +167,16 @@
             top: 1vh;
             margin-left: 1vh;
         }
+        
+        table {
+            font-family: arial;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            float: left;
+            position: relative;
+            margin-top: 20px;
+        }
     </style>
     <script>
     </script>
@@ -215,16 +225,7 @@
                 <div class='phone' id='global' onclick="selectGlobal(event);" onmousedown="setRedimension(event);" onmouseup="setRedimension(event);" onmousemove="redimension(event);"></div>
             </div>
             <aside>
-                <label class="editor-title">Pre-defined elements</label>
-                <div class="editor-button">Banner</div>
-                <div class="editor-button">Profile pic</div>
-                <div class="editor-button">Company title</div>
-                <div class="editor-button">Subtitle</div>
-                <div class="editor-button">Dish template</div>
-                <div class="editor-button">Dish title</div>
-                <div class="editor-button">Dish pic</div>
-                <div class="editor-button">Dish description</div>
-                <label class="editor-title">Bare elements</label>
+                <label class="editor-title">Elements</label>
                 <div class="editor-button" onclick="addObj('container');">Container</div>
                 <div class="editor-button" onclick="addObj('image');">Image</div>
                 <div class="editor-button" onclick="addObj('button');">Button</div>
