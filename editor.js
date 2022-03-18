@@ -7,6 +7,10 @@ var global_angle = 0;
 var selected_index = "global";
 
 function generateColorPallete() {
+    objects = [];
+    id_index_counter = 0;
+    addObject("global", "global", "");
+
     var start = { r: Math.random() * 100 + 100, g: Math.random() * 100 + 100, b: Math.random() * 100 + 100 };
     var end = { r: Math.random() * 100 + 100, g: Math.random() * 100 + 100, b: Math.random() * 100 + 100 };
     var middle_start = { r: (start.r * 0.75 + end.r * 0.25) + Math.random() * 25, g: (start.g * 0.75 + end.g * 0.25) + Math.random() * 25, b: (start.b * 0.75 + end.b * 0.25) + Math.random() * 25 };
