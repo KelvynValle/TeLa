@@ -145,7 +145,7 @@ function addObj(type) {
     var code = objectsToString();
     code = compiller(code);
     interpret(document.getElementById('global'), {}, code, true, true);
-    document.getElementById('global').innerHTML += '<div id="bounding-box"><div class="control-box left-side" id="left-cursor"></div><div class="control-box right-side" id="right-cursor"></div><div class="control-box bottom-side" id="bottom-cursor"></div><div class="control-box top-side" id="top-cursor"></div><div class="spin-box" id="spin-cursor">&olarr;</div></div>';
+    document.getElementById('global').innerHTML += '<div id="bounding-box"><div class="control-box left-side" id="left-cursor"></div><div class="control-box right-side" id="right-cursor"></div><div class="control-box bottom-side" id="bottom-cursor"></div><div class="control-box top-side" id="top-cursor"></div><div class="control-box bottom-left-side" id="bottom-left-cursor"></div><div class="control-box top-left-side" id="top-left-cursor"></div><div class="control-box top-right-side" id="top-right-cursor"></div><div class="spin-box" id="spin-cursor">&olarr;</div></div>';
     addDragAndDrop();
 
 }
@@ -224,6 +224,21 @@ function setRedimension(e) {
             break;
         case "bottom-cursor":
             bottom_redimension = !bottom_redimension;
+            redimensioning = !redimensioning;
+            break;
+        case "bottom-left-cursor":
+            bottom_redimension = !bottom_redimension;
+            left_redimension = !left_redimension;
+            redimensioning = !redimensioning;
+            break;
+        case "top-left-cursor":
+            top_redimension = !top_redimension;
+            left_redimension = !left_redimension;
+            redimensioning = !redimensioning;
+            break;
+        case "top-right-cursor":
+            top_redimension = !top_redimension;
+            right_redimension = !right_redimension;
             redimensioning = !redimensioning;
             break;
         case "spin-cursor":
