@@ -32,6 +32,14 @@ function changeProperty(obj_name, obj_property, property_value) {
     }
 }
 
+function getProperty(obj_name, obj_property) {
+    for (var i = 0; i < objects.length; i++) {
+        if (objects[i].name == obj_name) {
+            return objects[i].properties[obj_property];
+        }
+    }
+}
+
 function objectsToString() {
     var code = "";
     for (var i = 0; i < objects.length; i++) {

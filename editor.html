@@ -126,6 +126,7 @@
         .edition {
             position: absolute;
             float: left;
+            transform-origin: center;
         }
         
         .selected {
@@ -138,6 +139,7 @@
             border-style: dashed;
             z-index: 0;
             display: none;
+            transform-origin: center;
         }
         
         .control-box {
@@ -145,6 +147,15 @@
             width: 10px;
             height: 10px;
             background-color: black;
+            cursor: pointer;
+        }
+        
+        .spin-box {
+            position: absolute;
+            float: right;
+            bottom: -20px;
+            right: -20px;
+            font-weight: bold;
             cursor: pointer;
         }
         
@@ -303,6 +314,10 @@
                         <tr>
                             <td>Margin</td>
                             <td><input type=text id="margin-txt" onkeyup="changeSelected('margin', this.value);" /></td>
+                        </tr>
+                        <tr>
+                            <td>Rotate</td>
+                            <td><input type=text id="rotate-txt" onkeyup="changeSelected('rotate', this.value);" /></td>
                         </tr>
                         <tr>
                             <td>Round</td>

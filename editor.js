@@ -78,6 +78,7 @@ function addObj(type) {
             changeProperty(`obj_${id_index_counter}`, 'height', '20%');
             changeProperty(`obj_${id_index_counter}`, 'left', '10%');
             changeProperty(`obj_${id_index_counter}`, 'top', '10px');
+            changeProperty(`obj_${id_index_counter}`, 'rotate', '0deg');
             break;
 
         case "image":
@@ -87,6 +88,7 @@ function addObj(type) {
             changeProperty(`obj_${id_index_counter}`, 'height', '50px');
             changeProperty(`obj_${id_index_counter}`, 'left', '0');
             changeProperty(`obj_${id_index_counter}`, 'top', '0');
+            changeProperty(`obj_${id_index_counter}`, 'rotate', '0deg');
             break;
 
         case "button":
@@ -100,6 +102,7 @@ function addObj(type) {
             changeProperty(`obj_${id_index_counter}`, 'value', 'Button');
             changeProperty(`obj_${id_index_counter}`, 'left', '0');
             changeProperty(`obj_${id_index_counter}`, 'top', '0');
+            changeProperty(`obj_${id_index_counter}`, 'rotate', '0deg');
             break;
 
         case "form":
@@ -110,6 +113,7 @@ function addObj(type) {
             changeProperty(`obj_${id_index_counter}`, 'height', '20%');
             changeProperty(`obj_${id_index_counter}`, 'left', '10%');
             changeProperty(`obj_${id_index_counter}`, 'top', '10px');
+            changeProperty(`obj_${id_index_counter}`, 'rotate', '0deg');
             break;
 
         case "text":
@@ -124,6 +128,7 @@ function addObj(type) {
             changeProperty(`obj_${id_index_counter}`, 'left', '10%');
             changeProperty(`obj_${id_index_counter}`, 'top', '10px');
             changeProperty(`obj_${id_index_counter}`, 'color', `${c4.value}`);
+            changeProperty(`obj_${id_index_counter}`, 'rotate', '0deg');
             break;
         case "label":
             changeProperty(`obj_${id_index_counter}`, 'font', 'arial');
@@ -131,6 +136,7 @@ function addObj(type) {
             changeProperty(`obj_${id_index_counter}`, 'align', 'center');
             changeProperty(`obj_${id_index_counter}`, 'color', `${c3.value}`);
             changeProperty(`obj_${id_index_counter}`, 'value', 'Label');
+            changeProperty(`obj_${id_index_counter}`, 'rotate', '0deg');
         case "template":
             break;
     }
@@ -139,7 +145,7 @@ function addObj(type) {
     var code = objectsToString();
     code = compiller(code);
     interpret(document.getElementById('global'), {}, code, true, true);
-    document.getElementById('global').innerHTML += '<div id="bounding-box"><div class="control-box left-side" id="left-cursor"></div><div class="control-box right-side" id="right-cursor"></div><div class="control-box bottom-side" id="bottom-cursor"></div><div class="control-box top-side" id="top-cursor"></div></div>';
+    document.getElementById('global').innerHTML += '<div id="bounding-box"><div class="control-box left-side" id="left-cursor"></div><div class="control-box right-side" id="right-cursor"></div><div class="control-box bottom-side" id="bottom-cursor"></div><div class="control-box top-side" id="top-cursor"></div><div class="spin-box" id="spin-cursor">&olarr;</div></div>';
     addDragAndDrop();
 
 }
@@ -220,18 +226,22 @@ function setRedimension(e) {
             bottom_redimension = !bottom_redimension;
             redimensioning = !redimensioning;
             break;
+        case "spin-cursor":
+            rotating = !rotating;
+            break;
         default:
-            if (redimensioning) {
+            if (redimensioning || rotating) {
                 redimensioning = false;
                 left_redimension = false;
                 right_redimension = false;
                 top_redimension = false;
                 bottom_redimension = false;
                 obj_redimension = undefined;
+                rotating = false;
             }
             break;
     }
-    if (redimensioning) {
+    if (redimensioning || rotating) {
         obj_redimension = document.getElementsByClassName("selected")[0];
     }
     console.log("redimensioning");
@@ -248,23 +258,24 @@ function getDimensions(obj) {
     var top = obj.clientT
 }
 
-
 function showBox() {
     var obj = document.getElementsByClassName("selected");
     var my = obj[0].getBoundingClientRect();
     var global = document.getElementById("global").getBoundingClientRect();
 
-    var top = my.top - global.top;
-    var left = my.left - global.left;
+    var top = `${getProperty(obj[0].id, "top")}` // - ${global.top}px`.replaceAll('"', ''); //my.top - global.top;
+    var left = `${getProperty(obj[0].id, "left")}` // - ${global.left}px`.replaceAll('"', ''); //my.left - global.left;
     var width = obj[0].style.width;
     var height = obj[0].style.height;
 
     var bb = document.getElementById("bounding-box");
     bb.style.display = "block";
-    bb.style.top = `calc(${top}px - 10px)`;
-    bb.style.left = `calc(${left}px - 10px)`;
+    var rotation = `rotate(${getProperty(obj[0].id, "rotate")})`.replaceAll('"', '');
+    bb.style.top = `calc(${top.replaceAll('"', '')} - 10px)`; //`calc(${top} - 10px)`;
+    bb.style.left = `calc(${left.replaceAll('"', '')} - 10px)`; //`calc(${left} - 10px)`;
     bb.style.width = `calc(${width} + 15px)`;
     bb.style.height = `calc(${height} + 15px)`;
+    bb.style.transform = rotation;
 }
 
 function hideBox() {
@@ -332,6 +343,7 @@ var right_redimension = false;
 var top_redimension = false;
 var bottom_redimension = false;
 var redimensioning = false;
+var rotating = false;
 
 function redimension(e) {
     //start_point_redimension
@@ -365,5 +377,9 @@ function redimension(e) {
             changeProperty(obj_redimension.id, "height", `${e.clientY - start_point_redimension.y + obj_redimension.clientHeight}px`);
             start_point_redimension.y = e.clientY;
         }
+    } else if (rotating) {
+        obj_redimension.style.transform = `rotate(${e.clientY - start_point_redimension.y + obj_redimension.clientHeight}deg)`;
+        changeProperty(obj_redimension.id, "rotate", `${e.clientY - start_point_redimension.y + obj_redimension.clientHeight}deg`);
+        showBox();
     }
 }

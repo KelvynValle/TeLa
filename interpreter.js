@@ -89,6 +89,9 @@ function interpret(container, data, code, clearContainer = true, edition = false
                         case "m":
                             obj.style.margin = replaceVariable(atob(command[2]), data, 0);
                             break;
+                        case "o":
+                            obj.style.transform = `rotate(${replaceVariable(atob(command[2]), data, 0)})`;
+                            break;
                     }
                 } else {
                     setTemplate(command[3], `s ${command[1]} ${command[2]}`, templates);

@@ -90,6 +90,9 @@ function compiller(code) {
                     case "margin":
                         bytecode += "m ";
                         break;
+                    case "rotate":
+                        bytecode += "o ";
+                        break;
                 }
                 bytecode += `${btoa(code[2])} ${code[4] == 'global' ? 'g' : code[4]};`;
                 break;
