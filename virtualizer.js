@@ -23,6 +23,19 @@ function addObject(type, name, container) {
     objects.push({ name: name, type: type, properties: properties, value: "", container: container });
 }
 
+function deleteObject(name) {
+    var index = -1;
+    for (var i = 0; i < objects.length; i++) {
+        if (objects[i].name == name) {
+            index = i;
+            break;
+        }
+    }
+    if (index > -1) {
+        objects.splice(index, 1);
+    }
+}
+
 function changeProperty(obj_name, obj_property, property_value) {
     for (var i = 0; i < objects.length; i++) {
         if (objects[i].name == obj_name) {

@@ -37,6 +37,17 @@ function generateColorPallete() {
     color_end = c4.value;
 }
 
+function redraw() {
+    var code = objectsToString();
+    code = compiller(code);
+    interpret(document.getElementById('global'), {}, code, true, true);
+    color_start = c1.value;
+    color_middle_start = c2.value;
+    color_middle_end = c3.value;
+    color_end = c4.value;
+    selected_index = "global";
+}
+
 function componentToHex(c) {
     var hex = c.toString(16);
     return hex.length == 1 ? "0" + hex : hex;
@@ -332,6 +343,7 @@ function dragMove(e) {
         obj.style.left = `${delta.x + init_location.left}px`;
         obj.style.top = `${delta.y + init_location.top}px`;
         hideBox();
+        setRedLitter();
     }
 
 }
@@ -348,8 +360,10 @@ function dragUp(e) {
 
         mouseDown = false;
         init = { x: 0, y: 0 };
+        unsetRedLitter(e);
         obj = undefined;
         showBox();
+
     }
 }
 
@@ -396,5 +410,30 @@ function redimension(e) {
         obj_redimension.style.transform = `rotate(${e.clientY - start_point_redimension.y + obj_redimension.clientHeight}deg)`;
         changeProperty(obj_redimension.id, "rotate", `${e.clientY - start_point_redimension.y + obj_redimension.clientHeight}deg`);
         showBox();
+    }
+}
+
+function unsetRedLitter(e) {
+    var litter = document.getElementById("litter-box");
+    if (litter.classList.contains("d-unselected")) {
+        litter.classList.add("d-selected");
+        litter.classList.remove("d-unselected");
+    }
+
+    var rect = litter.getBoundingClientRect();
+    var icon_ray = 45;
+    var dist = Math.sqrt(Math.pow(e.clientX - rect.left - icon_ray / 2, 2) + Math.pow(e.clientY - rect.top - icon_ray / 2, 2));
+    if (dist <= icon_ray / 2) {
+        var id = obj.id;
+        deleteObject(id);
+        redraw();
+    }
+}
+
+function setRedLitter() {
+    var litter = document.getElementById("litter-box");
+    if (litter.classList.contains("d-selected")) {
+        litter.classList.add("d-unselected");
+        litter.classList.remove("d-selected");
     }
 }
