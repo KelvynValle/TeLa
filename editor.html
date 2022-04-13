@@ -28,6 +28,41 @@
             border-radius: 20px;
         }
         
+        input[type="number"] {
+            float: left;
+            position: relative;
+            border: none;
+            padding: 9px;
+            background-color: white;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            width: 65px;
+            margin-left: 20px;
+        }
+        
+        .zoom-buttons {
+            user-select: none;
+            outline: 0;
+            float: left;
+            position: relative;
+            width: 33px;
+            height: 33px;
+            margin-left: 6px;
+            background-color: rgba(200, 200, 200);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 33px;
+            top: calc(3.5vh - 16.5px);
+            cursor: pointer;
+            opacity: 1;
+            transition: opacity .3s;
+        }
+        
+        .zoom-buttons:hover {
+            opacity: 0.5;
+        }
+        
         .container-editor {
             float: left;
             position: relative;
@@ -278,31 +313,31 @@
             <select id='phone-dimension' onchange='changeDimension(this.value);'>
                 <option disabled selected>Dimensões (mm)</option>
                 <!-- mobile -->
-                <option value='{"width":64, "height":129}'>64 x 129</option>
-                <option value='{"width":73.4, "height":148}'>73.4 x 148</option>
-                <option value='{"width":68.1, "height":148.9}'>68.1 x 148.9</option>
-                <option value='{"width":73.4, "height":159.5}'>73.4 x 159.5</option>
-                <option value='{"width":76.2, "height":153.5}'>76.2 x 153.5</option>
-                <option value='{"width":75, "height":151.7}'>75 x 151.7</option>
-                <option value='{"width":58.6, "height":123.8}'>58.6 x 123.8</option>
-                <option value='{"width":67.1, "height":138.3}'>67.1 x 138.3</option>
-                <option value='{"width":77.9, "height":158.2}'>77.9 x 158.2</option>
-                <option value='{"width":70.7, "height":141.5}'>70.7 x 141.5</option>
-                <option value='{"width":69.8, "height":136.6}'>69.8 x 136.6</option>
-                <option value='{"width":65.9, "height":129.9}'>65.9 x 129.9</option>
-                <option value='{"width":66.1, "height":125.3}'>66.1 x 125.3</option>
-                <option value='{"width":58.6, "height":115.2}'>58.6 x 115.2</option>
+                <option value='{"width":64, "height":129, "zoom":100}'>64 x 129</option>
+                <option value='{"width":73.4, "height":148, "zoom":100}'>73.4 x 148</option>
+                <option value='{"width":68.1, "height":148., "zoom":100}'>68.1 x 148.9</option>
+                <option value='{"width":73.4, "height":159.5, "zoom":80}'>73.4 x 159.5</option>
+                <option value='{"width":76.2, "height":153.5, "zoom":80}'>76.2 x 153.5</option>
+                <option value='{"width":75, "height":151.7, "zoom":80}'>75 x 151.7</option>
+                <option value='{"width":58.6, "height":123.8, "zoom":100}'>58.6 x 123.8</option>
+                <option value='{"width":67.1, "height":138.3, "zoom":100}'>67.1 x 138.3</option>
+                <option value='{"width":77.9, "height":158.2, "zoom":80}'>77.9 x 158.2</option>
+                <option value='{"width":70.7, "height":141.5, "zoom":80}'>70.7 x 141.5</option>
+                <option value='{"width":69.8, "height":136.6, "zoom":100}'>69.8 x 136.6</option>
+                <option value='{"width":65.9, "height":129.9, "zoom":100}'>65.9 x 129.9</option>
+                <option value='{"width":66.1, "height":125.3, "zoom":100}'>66.1 x 125.3</option>
+                <option value='{"width":58.6, "height":115.2, "zoom":100}'>58.6 x 115.2</option>
                 <!-- laptops -->
-                <option value='{"width":1366, "height":768}'>1366 x 768</option>
-                <option value='{"width":1600, "height":900}'>1600 x 900</option>
-                <option value='{"width":1920, "height":1080}'>1920 x 1080</option>
-                <option value='{"width":2304, "height":1440}'>2304 x 1440</option>
-                <option value='{"width":2560, "height":1600}'>2560 x 1600</option>
-                <option value='{"width":2560, "height":1440'>2560 x 1440</option>
-                <option value='{"width":2880, "height":1800}'>2880 x 1800</option>
-                <option value='{"width":3000, "height":2000}'>3000 x 2000</option>
-                <option value='{"width":3200, "height":1800}'>3200 x 1800</option>
-                <option value='{"width":3840, "height":2160}'>3840 x 2160</option>
+                <option value='{"width":1366, "height":768, "zoom":10}'>1366 x 768</option>
+                <option value='{"width":1600, "height":900, "zoom":10}'>1600 x 900</option>
+                <option value='{"width":1920, "height":1080, "zoom":10}'>1920 x 1080</option>
+                <option value='{"width":2304, "height":1440, "zoom":10}'>2304 x 1440</option>
+                <option value='{"width":2560, "height":1600, "zoom":5}'>2560 x 1600</option>
+                <option value='{"width":2560, "height":1440, "zoom":5}'>2560 x 1440</option>
+                <option value='{"width":2880, "height":1800, "zoom":5}'>2880 x 1800</option>
+                <option value='{"width":3000, "height":2000, "zoom":5}'>3000 x 2000</option>
+                <option value='{"width":3200, "height":1800, "zoom":5}'>3200 x 1800</option>
+                <option value='{"width":3840, "height":2160, "zoom":5}'>3840 x 2160</option>
                 </select>
             <label class="label-description">Default unit:</label>
             <select>
@@ -316,6 +351,9 @@
             <input type="color" id="c3" />
             <input type="color" id="c4" />
             <input type="button" value="Renew" class="btn-top" onclick="generateColorPallete();" />
+            <input type="number" value="100" step="2" id="zoom-input" onchange="changeZoom(this.value);" />
+            <div class="zoom-buttons" onclick="zoomIncrement(2);">+</div>
+            <div class="zoom-buttons" onclick="zoomIncrement(-2);">-</div>
         </header>
         <section>
             <div class="container-editor">

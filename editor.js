@@ -62,19 +62,32 @@ function startEditor() {
     document.getElementById("global").addEventListener("mouseup", function() { dragUp(event) }, false);
     document.getElementById("global").addEventListener("mousemove", function() { dragMove(event) }, false);
     document.getElementById("phone-dimension").value = '{"width":64, "height":129}';
-    changeDimension('{"width":64, "height":129}');
+    changeDimension('{"width":64, "height":129, "zoom":100}');
+}
+
+function changeZoom(value) {
+    var phone = document.getElementById("global");
+    phone.style.transform = `scale(${value / 100})`;
+}
+
+function zoomIncrement(value) {
+    var z = document.getElementById("zoom-input");
+    z.value = parseInt(z.value) + value;
+    changeZoom(z.value);
 }
 
 function changeDimension(value) {
     var dimensions = JSON.parse(value);
     var width = dimensions.width / 10;
     var height = dimensions.height / 10;
+    var scale = dimensions.zoom / 100;
     var phone = document.getElementById("global");
     phone.style.width = `${width}cm`;
     phone.style.height = `${height}cm`;
     phone.style.top = `calc(45vh - ${height / 2}cm)`;
     phone.style.left = `calc(40vw - ${width / 2}cm)`;
-
+    phone.style.transform = `scale(${scale})`;
+    document.getElementById("zoom-input").value = dimensions.zoom;
 }
 
 function addObj(type) {
