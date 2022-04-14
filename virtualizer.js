@@ -1,11 +1,12 @@
 //add virtual objects in json array
 //convert virtual objects in line-code strings
+var json_data = { name: "test", age: 0, friends: [{ name: "alice", age: 0 }, { name: "john", age: 0 }] };
 var objects = [];
 var id_index_counter = 0;
 var code_residue = "";
 addObject("global", "global", "");
 
-function addObject(type, name, container) {
+function addObject(type, name, container, variable_template = "") {
     var properties = {
         border: "",
         width: "",
@@ -21,7 +22,7 @@ function addObject(type, name, container) {
         align: "",
         margin: ""
     };
-    objects.push({ name: name, type: type, properties: properties, value: "", container: container });
+    objects.push({ name: name, type: type, properties: properties, value: "", container: container, for_: variable_template });
 }
 
 function deleteObject(name) {
@@ -57,7 +58,11 @@ function getProperty(obj_name, obj_property) {
 function objectsToString() {
     var code = "";
     for (var i = 0; i < objects.length; i++) {
-        code += `add ${objects[i].type} ${objects[i].name} to ${objects[i].container}\n`;
+        if (objects[i].type != "template") {
+            code += `add ${objects[i].type} ${objects[i].name} to ${objects[i].container}\n`;
+        } else {
+            code += `add ${objects[i].type} ${objects[i].name} to ${objects[i].container} for ${objects[i].for_}\n`;
+        }
         for (var k in objects[i].properties) {
             if (objects[i].properties[k] != "") {
                 code += `set ${k} ${objects[i].properties[k]} to ${objects[i].name}\n`;

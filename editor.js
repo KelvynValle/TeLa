@@ -29,12 +29,21 @@ function generateColorPallete() {
 
     var code = objectsToString();
     code = compiller(code);
-    interpret(document.getElementById('global'), {}, code, true, true);
+    interpret(document.getElementById('global'), json_data, code, true, true);
 
     color_start = c1.value;
     color_middle_start = c2.value;
     color_middle_end = c3.value;
     color_end = c4.value;
+}
+
+function setJSON() {
+    var j_code = document.getElementById("json-content");
+    if (j_code.value == "") {
+        j_code.value = JSON.stringify(json_data);
+    } else {
+        json_data = JSON.parse(j_code.value);
+    }
 }
 
 function interpretCodeFromEditor(code) {
@@ -47,7 +56,7 @@ function redraw() {
     var code = objectsToString();
     document.getElementById("code-content").value = code + code_residue;
     code = compiller(code);
-    interpret(document.getElementById('global'), {}, code, true, true);
+    interpret(document.getElementById('global'), json_data, code, true, true);
     color_start = c1.value;
     color_middle_start = c2.value;
     color_middle_end = c3.value;
@@ -215,7 +224,7 @@ function addObj(type) {
     id_index_counter++;
     var code = objectsToString();
     code = compiller(code);
-    interpret(document.getElementById('global'), {}, code, true, true);
+    interpret(document.getElementById('global'), json_data, code, true, true);
     document.getElementById('global').innerHTML += '<div id="bounding-box"><div class="control-box left-side" id="left-cursor"></div><div class="control-box right-side" id="right-cursor"></div><div class="control-box bottom-side" id="bottom-cursor"></div><div class="control-box top-side" id="top-cursor"></div><div class="control-box bottom-left-side" id="bottom-left-cursor"></div><div class="control-box top-left-side" id="top-left-cursor"></div><div class="control-box top-right-side" id="top-right-cursor"></div><div class="spin-box" id="spin-cursor">&olarr;</div></div>';
     addDragAndDrop();
 
@@ -392,7 +401,7 @@ function changeSelected(obj_property, property_value) {
         changeProperty(obj_name, obj_property, property_value);
         var code = objectsToString();
         code = compiller(code);
-        interpret(document.getElementById('global'), {}, code, true, true);
+        interpret(document.getElementById('global'), json_data, code, true, true);
         selectObject(obj_name);
         document.getElementById('global').innerHTML += '<div id="bounding-box"></div>';
         addDragAndDrop();

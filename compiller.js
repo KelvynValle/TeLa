@@ -124,7 +124,12 @@ function compileToVirtual(code) {
                 var type = code[1];
                 var name = code[2];
                 var container = code[4];
-                addObject(type, name, container);
+                if (type != "template") {
+                    addObject(type, name, container);
+                } else {
+                    addObject(type, name, container, code[6]);
+                }
+
                 break;
             case "set":
                 var property = code[1];

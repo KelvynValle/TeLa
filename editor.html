@@ -387,13 +387,13 @@
                 <div class="delete d-unselected" id="litter-box" onmouseenter="deleteObjBtn();">&Otimes;</div>
                 <div class='phone' id='global' onclick="selectGlobal(event);" onmousedown="setRedimension(event);" onmouseup="setRedimension(event);" onmousemove="redimension(event);"></div>
                 <div class='code' id='code-box'><textarea id="code-content"></textarea></div>
-                <div class='code' id='json-box'><textarea></textarea></div>
+                <div class='code' id='json-box'><textarea id="json-content"></textarea></div>
             </div>
             <aside>
                 <label class="editor-title">Views</label>
-                <div class="editor-button" onclick="setCodeTop('page');interpretCodeFromEditor(document.getElementById('code-content').value);">Page</div>
-                <div class="editor-button" onclick="setCodeTop('code-box');document.getElementById('code-content').value = objectsToString();">Code</div>
-                <div class="editor-button" onclick="setCodeTop('json-box');">JSON</div>
+                <div class="editor-button" onclick="setCodeTop('page');interpretCodeFromEditor(document.getElementById('code-content').value);setJSON();">Page</div>
+                <div class="editor-button" onclick="setCodeTop('code-box');document.getElementById('code-content').value = objectsToString();setJSON();">Code</div>
+                <div class="editor-button" onclick="setCodeTop('json-box');setJSON();">JSON</div>
                 <label class="editor-title">Elements</label>
                 <div class="editor-button" onclick="addObj('container');">Container</div>
                 <div class="editor-button" onclick="addObj('image');">Image</div>
