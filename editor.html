@@ -296,6 +296,33 @@
         .d-unselected {
             background-color: rgba(200, 100, 100, 1);
         }
+        
+        body,
+        html {
+            overflow: hidden;
+        }
+        
+        .code {
+            float: left;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(90, 90, 90, 0.9);
+            top: 150%;
+            transition: top .3s;
+            z-index: 1000;
+        }
+        
+        .code textarea {
+            float: left;
+            position: relative;
+            width: 90%;
+            height: 90%;
+            left: 5%;
+            top: 5%;
+            border-radius: 6px;
+            border: none;
+        }
     </style>
     <script>
     </script>
@@ -359,8 +386,14 @@
             <div class="container-editor">
                 <div class="delete d-unselected" id="litter-box" onmouseenter="deleteObjBtn();">&Otimes;</div>
                 <div class='phone' id='global' onclick="selectGlobal(event);" onmousedown="setRedimension(event);" onmouseup="setRedimension(event);" onmousemove="redimension(event);"></div>
+                <div class='code' id='code-box'><textarea id="code-content" onkeyup="interpretCodeFromEditor(this.value);"></textarea></div>
+                <div class='code' id='json-box'><textarea></textarea></div>
             </div>
             <aside>
+                <label class="editor-title">Views</label>
+                <div class="editor-button" onclick="setCodeTop('page');">Page</div>
+                <div class="editor-button" onclick="setCodeTop('code-box');">Code</div>
+                <div class="editor-button" onclick="setCodeTop('json-box');">JSON</div>
                 <label class="editor-title">Elements</label>
                 <div class="editor-button" onclick="addObj('container');">Container</div>
                 <div class="editor-button" onclick="addObj('image');">Image</div>

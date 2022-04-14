@@ -37,8 +37,16 @@ function generateColorPallete() {
     color_end = c4.value;
 }
 
+function interpretCodeFromEditor(code) {
+    document.getElementById("code-content").value = code;
+    code = compiller(code);
+    interpret(document.getElementById('global'), {}, code, true, true);
+    stringToObjects(code);
+}
+
 function redraw() {
     var code = objectsToString();
+    document.getElementById("code-content").value = code;
     code = compiller(code);
     interpret(document.getElementById('global'), {}, code, true, true);
     color_start = c1.value;
@@ -46,6 +54,7 @@ function redraw() {
     color_middle_end = c3.value;
     color_end = c4.value;
     selected_index = "global";
+
 }
 
 function componentToHex(c) {
@@ -503,5 +512,17 @@ function setRedLitter() {
     if (litter.classList.contains("d-selected")) {
         litter.classList.add("d-unselected");
         litter.classList.remove("d-selected");
+    }
+}
+
+function setCodeTop(id) {
+    var el = document.getElementsByClassName("code");
+    for (var i = 0; i < el.length; i++) {
+        if (el[i].id != id) {
+            el[i].style.top = "150%";
+        }
+    }
+    if (id != 'page') {
+        document.getElementById(id).style.top = "0";
     }
 }

@@ -66,6 +66,10 @@ function objectsToString() {
     return code;
 }
 
+function stringToObjects(code) {
+
+}
+
 function changeDefaultUnit(unit, global) {
     for (var i = 1; i < objects.length; i++) {
         objects[i].properties["width"] = unit == "1" ? (objects[i].properties["width"].includes("px") ? objects[i].properties["width"] : (toFloat(objects[i].properties["width"]) * (global.width / 0.026458) * 0.001) + "px") : (objects[i].properties["width"].includes("%") ? objects[i].properties["width"] : ((toFloat(objects[i].properties["width"]) / ((global.width / 0.026458) * 0.1)) * 100) + "%");
