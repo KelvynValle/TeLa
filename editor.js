@@ -92,6 +92,41 @@ function changeDimension(value) {
     document.getElementById("zoom-input").value = global_dimension.zoom;
 }
 
+function onChangePalette() {
+    for (var i = 0; i < objects.length; i++) {
+        var type = objects[i].type;
+        switch (type) {
+            case "global":
+                changeProperty(objects[i].name, "gradient", `${global_angle}deg, ${c2.value}, ${c3.value}`)
+                break;
+            case "container":
+                changeProperty(objects[i].name, "gradient", `${global_angle}deg, ${c2.value}, ${c3.value}`)
+                break;
+
+            case "image":
+                changeProperty(objects[i].name, 'background', `${c2.value}`);
+                break;
+
+            case "button":
+                changeProperty(objects[i].name, "gradient", `${global_angle}deg, ${c1.value}, ${c2.value}`)
+                break;
+
+            case "form":
+                changeProperty(objects[i].name, "gradient", `${global_angle}deg, ${c2.value}, ${c3.value}`)
+                break;
+
+            case "text":
+                changeProperty(objects[i].name, "gradient", `${global_angle}deg, ${c2.value}50, ${c3.value}60`)
+                break;
+            case "label":
+                changeProperty(objects[i].name, 'color', `${c3.value}`);
+            case "template":
+                break;
+        }
+        redraw();
+    }
+}
+
 function addObj(type) {
     changeToVarious();
     addObject(type, `obj_${id_index_counter}`, selected_index); //"global");

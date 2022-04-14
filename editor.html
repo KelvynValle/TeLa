@@ -346,10 +346,10 @@
                     <option value="2">%</option>
             </select>
             <label class="label-description">Color pallete:</label>
-            <input type="color" id="c1" />
-            <input type="color" id="c2" />
-            <input type="color" id="c3" />
-            <input type="color" id="c4" />
+            <input type="color" id="c1" onchange="onChangePalette();" />
+            <input type="color" id="c2" onchange="onChangePalette();" />
+            <input type="color" id="c3" onchange="onChangePalette();" />
+            <input type="color" id="c4" onchange="onChangePalette();" />
             <input type="button" value="Renew" class="btn-top" onclick="generateColorPallete();" />
             <input type="number" value="100" step="2" id="zoom-input" onchange="changeZoom(this.value);" />
             <div class="zoom-buttons" onclick="zoomIncrement(2);">+</div>
