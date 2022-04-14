@@ -65,3 +65,16 @@ function objectsToString() {
     }
     return code;
 }
+
+function changeDefaultUnit(unit, global) {
+    for (var i = 1; i < objects.length; i++) {
+        objects[i].properties["width"] = unit == "1" ? (objects[i].properties["width"].includes("px") ? objects[i].properties["width"] : (toFloat(objects[i].properties["width"]) * (global.width / 0.026458) * 0.001) + "px") : (objects[i].properties["width"].includes("%") ? objects[i].properties["width"] : ((toFloat(objects[i].properties["width"]) / ((global.width / 0.026458) * 0.1)) * 100) + "%");
+        objects[i].properties["height"] = unit == "1" ? (objects[i].properties["height"].includes("px") ? objects[i].properties["height"] : (toFloat(objects[i].properties["height"]) * (global.height / 0.026458) * 0.001) + "px") : (objects[i].properties["height"].includes("%") ? objects[i].properties["height"] : ((toFloat(objects[i].properties["height"]) / ((global.height / 0.026458) * 0.1)) * 100) + "%");
+        objects[i].properties["left"] = unit == "1" ? (objects[i].properties["left"].includes("px") ? objects[i].properties["left"] : (toFloat(objects[i].properties["left"]) * (global.width / 0.026458) * 0.001) + "px") : (objects[i].properties["left"].includes("%") ? objects[i].properties["left"] : ((toFloat(objects[i].properties["left"]) / ((global.width / 0.026458) * 0.1)) * 100) + "%");
+        objects[i].properties["top"] = unit == "1" ? (objects[i].properties["top"].includes("px") ? objects[i].properties["top"] : (toFloat(objects[i].properties["top"]) * (global.height / 0.026458) * 0.001) + "px") : (objects[i].properties["top"].includes("%") ? objects[i].properties["top"] : ((toFloat(objects[i].properties["top"]) / ((global.height / 0.026458) * 0.1)) * 100) + "%");
+    }
+}
+
+function toFloat(value) {
+    return parseFloat(value.replace("px", "").replace("%", "").replaceAll('"', ''));
+}

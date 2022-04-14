@@ -340,11 +340,11 @@
                 <option value='{"width":3840, "height":2160, "zoom":5}'>3840 x 2160</option>
                 </select>
             <label class="label-description">Default unit:</label>
-            <select>
+            <select onchange="if(this.value != 0){changeDefaultUnit(this.value, global_dimension);}" id="unit-select">
                     <option value="0">various</option>
                     <option value="1">px</option>
                     <option value="2">%</option>
-                </select>
+            </select>
             <label class="label-description">Color pallete:</label>
             <input type="color" id="c1" />
             <input type="color" id="c2" />

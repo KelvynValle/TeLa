@@ -76,21 +76,24 @@ function zoomIncrement(value) {
     changeZoom(z.value);
 }
 
+var global_dimension = { width: 0, height: 0, zoom: 100 };
+
 function changeDimension(value) {
-    var dimensions = JSON.parse(value);
-    var width = dimensions.width / 10;
-    var height = dimensions.height / 10;
-    var scale = dimensions.zoom / 100;
+    global_dimension = JSON.parse(value);
+    var width = global_dimension.width / 10;
+    var height = global_dimension.height / 10;
+    var scale = global_dimension.zoom / 100;
     var phone = document.getElementById("global");
     phone.style.width = `${width}cm`;
     phone.style.height = `${height}cm`;
     phone.style.top = `calc(45vh - ${height / 2}cm)`;
     phone.style.left = `calc(40vw - ${width / 2}cm)`;
     phone.style.transform = `scale(${scale})`;
-    document.getElementById("zoom-input").value = dimensions.zoom;
+    document.getElementById("zoom-input").value = global_dimension.zoom;
 }
 
 function addObj(type) {
+    changeToVarious();
     addObject(type, `obj_${id_index_counter}`, selected_index); //"global");
 
     switch (type) {
@@ -231,42 +234,58 @@ function selectGlobal(e) {
     }
 }
 
+function changeToVarious() {
+    var unit = document.getElementById("unit-select");
+    if (unit.value != "0") {
+        unit.value = 0;
+    }
+}
+
 function setRedimension(e) {
+
     start_point_redimension = { x: e.clientX, y: e.clientY };
     switch (e.target.id) {
         case "left-cursor":
             left_redimension = !left_redimension;
             redimensioning = !redimensioning;
+            changeToVarious();
             break;
         case "right-cursor":
             right_redimension = !right_redimension;
             redimensioning = !redimensioning;
+            changeToVarious();
             break;
         case "top-cursor":
             top_redimension = !top_redimension;
             redimensioning = !redimensioning;
+            changeToVarious();
             break;
         case "bottom-cursor":
             bottom_redimension = !bottom_redimension;
             redimensioning = !redimensioning;
+            changeToVarious();
             break;
         case "bottom-left-cursor":
             bottom_redimension = !bottom_redimension;
             left_redimension = !left_redimension;
             redimensioning = !redimensioning;
+            changeToVarious();
             break;
         case "top-left-cursor":
             top_redimension = !top_redimension;
             left_redimension = !left_redimension;
             redimensioning = !redimensioning;
+            changeToVarious();
             break;
         case "top-right-cursor":
             top_redimension = !top_redimension;
             right_redimension = !right_redimension;
             redimensioning = !redimensioning;
+            changeToVarious();
             break;
         case "spin-cursor":
             rotating = !rotating;
+            changeToVarious();
             break;
         default:
             if (redimensioning || rotating) {
@@ -357,6 +376,7 @@ function dragMove(e) {
         obj.style.top = `${delta.y + init_location.top}px`;
         hideBox();
         setRedLitter();
+        changeToVarious();
     }
 
 }
