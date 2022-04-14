@@ -107,6 +107,38 @@ function compiller(code) {
     return bytecode;
 }
 
+function compileToVirtual(code) {
+    var lines = code.split("\n");
+    objects = [];
+    id_index_counter = 0;
+    code_residue = "";
+    for (var i = 0; i < lines.length; i++) {
+        var code = [];
+        if (lines[i].includes('"')) {
+            code = slice(lines[i]);
+        } else {
+            code = lines[i].split(" ");
+        }
+        switch (code[0]) {
+            case "add":
+                var type = code[1];
+                var name = code[2];
+                var container = code[4];
+                addObject(type, name, container);
+                break;
+            case "set":
+                var property = code[1];
+                var obj = code[4];
+                var value = (code[2]);
+                changeProperty(obj, property, value);
+                break;
+            default:
+                code_residue += code_residue[code_residue.length - 1] == "\n" ? lines[i] : ("\n" + lines[i]);
+                break;
+        }
+    }
+}
+
 function slice(str) {
     var arr = [];
     var quote = false;

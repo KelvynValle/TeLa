@@ -39,14 +39,13 @@ function generateColorPallete() {
 
 function interpretCodeFromEditor(code) {
     document.getElementById("code-content").value = code;
-    code = compiller(code);
-    interpret(document.getElementById('global'), {}, code, true, true);
-    stringToObjects(code);
+    compileToVirtual(code);
+    redraw();
 }
 
 function redraw() {
     var code = objectsToString();
-    document.getElementById("code-content").value = code;
+    document.getElementById("code-content").value = code + code_residue;
     code = compiller(code);
     interpret(document.getElementById('global'), {}, code, true, true);
     color_start = c1.value;
@@ -54,7 +53,8 @@ function redraw() {
     color_middle_end = c3.value;
     color_end = c4.value;
     selected_index = "global";
-
+    document.getElementById('global').innerHTML += '<div id="bounding-box"><div class="control-box left-side" id="left-cursor"></div><div class="control-box right-side" id="right-cursor"></div><div class="control-box bottom-side" id="bottom-cursor"></div><div class="control-box top-side" id="top-cursor"></div><div class="control-box bottom-left-side" id="bottom-left-cursor"></div><div class="control-box top-left-side" id="top-left-cursor"></div><div class="control-box top-right-side" id="top-right-cursor"></div><div class="spin-box" id="spin-cursor">&olarr;</div></div>';
+    addDragAndDrop();
 }
 
 function componentToHex(c) {

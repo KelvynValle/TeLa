@@ -2,6 +2,7 @@
 //convert virtual objects in line-code strings
 var objects = [];
 var id_index_counter = 0;
+var code_residue = "";
 addObject("global", "global", "");
 
 function addObject(type, name, container) {
@@ -64,10 +65,6 @@ function objectsToString() {
         }
     }
     return code;
-}
-
-function stringToObjects(code) {
-
 }
 
 function changeDefaultUnit(unit, global) {
