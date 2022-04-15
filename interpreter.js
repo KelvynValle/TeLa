@@ -32,7 +32,7 @@ function interpret(container, data, code, clearContainer = true, edition = false
                         obj = false;
                     }
                 }
-                if (obj != false) {
+                if (obj != false && command[1] != "$") {
                     switch (command[1]) {
                         case "v":
                             switch (obj.tagName) {
@@ -95,7 +95,11 @@ function interpret(container, data, code, clearContainer = true, edition = false
                             break;
                     }
                 } else {
-                    setTemplate(command[3], `s ${command[1]} ${command[2]}`, templates);
+                    if (command[1] != "$") {
+                        setTemplate(command[3], `s ${command[1]} ${command[2]}`, templates);
+                    } else {
+                        data[command[3]] = replaceVariable(atob(command[2]), data, 0);
+                    }
                 }
                 break;
             case "d":

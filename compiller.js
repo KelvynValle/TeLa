@@ -39,6 +39,9 @@ function compiller(code) {
                     case "label":
                         bytecode += "l ";
                         break;
+                    default:
+
+                        break;
                 }
                 bytecode += `${code[2]} ${code[4] == 'global' ? 'g' : code[4]} ${code[1] == "template" ? code[6].replace("$", "") : ""};`;
                 break;
@@ -93,6 +96,13 @@ function compiller(code) {
                     case "rotate":
                         bytecode += "o ";
                         break;
+                    default:
+                        if (code.length == 4) {
+                            bytecode += "$ ";
+                            code.splice(2, 0, code[1]);
+                            code[4] = code[4].replace("$", "");
+                        }
+                        break;
                 }
                 bytecode += `${btoa(code[2])} ${code[4] == 'global' ? 'g' : code[4]};`;
                 break;
@@ -132,10 +142,17 @@ function compileToVirtual(code) {
 
                 break;
             case "set":
-                var property = code[1];
-                var obj = code[4];
-                var value = (code[2]);
-                changeProperty(obj, property, value);
+                if (code.length > 4) {
+                    var property = code[1];
+                    var obj = code[4];
+                    var value = (code[2]);
+                    changeProperty(obj, property, value);
+                } else {
+                    var value = code[1];
+                    var obj = code[3];
+                    changeVariable(obj, value);
+                }
+
                 break;
             default:
                 code_residue += code_residue[code_residue.length - 1] == "\n" ? lines[i] : ("\n" + lines[i]);

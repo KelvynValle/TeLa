@@ -27,6 +27,22 @@ function addObject(type, name, container, variable_template = "") {
     objects.push({ name: name, type: type, properties: properties, value: "", container: container }); //, for_: variable_template });
 }
 
+function changeVariable(name, value) {
+    if (!elementExist(name)) {
+        addObject("variable", name, "");
+    }
+    changeProperty(name, "value", value);
+}
+
+function elementExist(name) {
+    for (var i = 0; i < objects.length; i++) {
+        if (objects[i].name == name) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function deleteObject(name) {
     var index = -1;
     for (var i = 0; i < objects.length; i++) {
@@ -60,16 +76,25 @@ function getProperty(obj_name, obj_property) {
 function objectsToString() {
     var code = "";
     for (var i = 0; i < objects.length; i++) {
-        if (objects[i].type != "template") {
+        if (objects[i].type != "template" && objects[i].type != "variable") {
             code += `add ${objects[i].type} ${objects[i].name} to ${objects[i].container}\n`;
         } else {
-            code += `add ${objects[i].type} ${objects[i].name} to ${objects[i].container} for ${objects[i].properties.for_}\n`;
+            if (objects[i].type == "template") {
+                code += `add ${objects[i].type} ${objects[i].name} to ${objects[i].container} for ${objects[i].properties.for_}\n`;
+            }
         }
         for (var k in objects[i].properties) {
             if (objects[i].properties[k] != "") {
-                if (k != "for_") {
-                    code += `set ${k} ${objects[i].properties[k]} to ${objects[i].name}\n`;
+                if (objects[i].type != "variable") {
+                    if (k != "for_") {
+                        code += `set ${k} ${objects[i].properties[k]} to ${objects[i].name}\n`;
+                    }
+                } else {
+                    if (k == "value") {
+                        code += `set ${objects[i].properties[k]} to ${objects[i].name}\n`;
+                    }
                 }
+
             }
         }
     }
