@@ -391,7 +391,7 @@
             </div>
             <aside>
                 <label class="editor-title">Views</label>
-                <div class="editor-button" onclick="setCodeTop('page');interpretCodeFromEditor(document.getElementById('code-content').value);setJSON();">Page</div>
+                <div class="editor-button" onclick="setCodeTop('page');interpretCodeFromEditor(document.getElementById('code-content').value);setJSON();feedNames();">Page</div>
                 <div class="editor-button" onclick="setCodeTop('code-box');document.getElementById('code-content').value = objectsToString();setJSON();">Code</div>
                 <div class="editor-button" onclick="setCodeTop('json-box');setJSON();">JSON</div>
                 <label class="editor-title">Elements</label>
@@ -412,7 +412,8 @@
                     <tbody>
                         <tr>
                             <td>Name</td>
-                            <td><input type=text id="name-txt" disabled/></td>
+                            <td><select id="name-txt" onchange="selectObject(this.value);"></select>
+                                <!--<input type=text id="name-txt" disabled/>--></td>
                         </tr>
                         <tr>
                             <td>Align</td>
@@ -433,6 +434,10 @@
                         <tr>
                             <td>Font</td>
                             <td><input type=text id="font-txt" onkeyup="changeSelected('font', this.value);" /></td>
+                        </tr>
+                        <tr>
+                            <td>For</td>
+                            <td><input type=text id="for_-txt" onkeyup="changeSelected('for_', this.value);" /></td>
                         </tr>
                         <tr>
                             <td>Gradient</td>

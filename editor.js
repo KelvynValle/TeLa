@@ -236,6 +236,7 @@ function addDragAndDrop() {
         edit[i].style.position = "absolute";
         edit[i].addEventListener("mousedown", function() {
             dragDown(event);
+
             selectObject(event.target.id);
         }, false);
     }
@@ -248,6 +249,7 @@ var obj = undefined;
 var mouseDown = false;
 
 function selectObject(id) {
+    feedNames();
     var selected = document.getElementsByClassName("selected");
     for (var i = 0; i < selected.length; i++) {
         selected[i].classList.remove("selected");
@@ -263,9 +265,13 @@ function selectObject(id) {
             break;
         }
     }
-    selected.classList.add("selected");
-    showBox();
+
     selected_index = id;
+    if (selected != undefined) {
+        selected.classList.add("selected");
+        showBox();
+    }
+
 }
 
 function selectGlobal(e) {
@@ -405,9 +411,28 @@ function changeSelected(obj_property, property_value) {
         document.getElementById('global').innerHTML += '<div id="bounding-box"><div class="control-box left-side" id="left-cursor"></div><div class="control-box right-side" id="right-cursor"></div><div class="control-box bottom-side" id="bottom-cursor"></div><div class="control-box top-side" id="top-cursor"></div><div class="control-box bottom-left-side" id="bottom-left-cursor"></div><div class="control-box top-left-side" id="top-left-cursor"></div><div class="control-box top-right-side" id="top-right-cursor"></div><div class="spin-box" id="spin-cursor">&olarr;</div></div>';
         addDragAndDrop();
         selectObject(obj_name);
-
+    } else {
+        //for templates and objects inside templates
+        var obj_name = document.getElementById("name-txt").value;
+        changeProperty(obj_name, obj_property, property_value);
+        var code = objectsToString();
+        code = compiller(code);
+        interpret(document.getElementById('global'), json_data, code, true, true);
+        document.getElementById('global').innerHTML += '<div id="bounding-box"><div class="control-box left-side" id="left-cursor"></div><div class="control-box right-side" id="right-cursor"></div><div class="control-box bottom-side" id="bottom-cursor"></div><div class="control-box top-side" id="top-cursor"></div><div class="control-box bottom-left-side" id="bottom-left-cursor"></div><div class="control-box top-left-side" id="top-left-cursor"></div><div class="control-box top-right-side" id="top-right-cursor"></div><div class="spin-box" id="spin-cursor">&olarr;</div></div>';
+        addDragAndDrop();
+        selectObject(obj_name);
     }
 }
+
+function feedNames() {
+    var options = "";
+    for (var i = 0; i < objects.length; i++) {
+        options += `<option>${objects[i].name}</option>`;
+    }
+    document.getElementById("name-txt").innerHTML = options;
+}
+
+
 
 function dragDown(e) {
     obj = e.target;

@@ -20,9 +20,10 @@ function addObject(type, name, container, variable_template = "") {
         left: "",
         top: "",
         align: "",
-        margin: ""
+        margin: "",
+        for_: variable_template
     };
-    objects.push({ name: name, type: type, properties: properties, value: "", container: container, for_: variable_template });
+    objects.push({ name: name, type: type, properties: properties, value: "", container: container }); //, for_: variable_template });
 }
 
 function deleteObject(name) {
@@ -61,11 +62,13 @@ function objectsToString() {
         if (objects[i].type != "template") {
             code += `add ${objects[i].type} ${objects[i].name} to ${objects[i].container}\n`;
         } else {
-            code += `add ${objects[i].type} ${objects[i].name} to ${objects[i].container} for ${objects[i].for_}\n`;
+            code += `add ${objects[i].type} ${objects[i].name} to ${objects[i].container} for ${objects[i].properties.for_}\n`;
         }
         for (var k in objects[i].properties) {
             if (objects[i].properties[k] != "") {
-                code += `set ${k} ${objects[i].properties[k]} to ${objects[i].name}\n`;
+                if (k != "for_") {
+                    code += `set ${k} ${objects[i].properties[k]} to ${objects[i].name}\n`;
+                }
             }
         }
     }
