@@ -1,4 +1,5 @@
 function interpret(container, data, code, clearContainer = true, edition = false) {
+    data = addUrlParamethers(data);
     var templates = [];
     if (clearContainer) {
         container.innerHTML = "";
@@ -104,6 +105,15 @@ function interpret(container, data, code, clearContainer = true, edition = false
         }
     }
     templating(templates, container, {}, "", -1, edition);
+}
+
+function addUrlParamethers(data) {
+    url_data = window.location.href;
+    var url = new URL(url_data);
+    for (var key of url.searchParams.keys()) {
+        data[key] = url.searchParams.get(key);
+    }
+    return data;
 }
 
 // replaces variable with $ mark to its value

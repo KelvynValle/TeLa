@@ -46,6 +46,19 @@ function setJSON() {
     }
 }
 
+function setURL() {
+    var u_code = document.getElementById("url-content");
+    if (u_code.value == "") {
+        u_code.value = url_data;
+    } else {
+        url_data = u_code.value;
+        var url = new URL(url_data);
+        for (var key of url.searchParams.keys()) {
+            json_data[key] = url.searchParams.get(key);
+        }
+    }
+}
+
 function interpretCodeFromEditor(code) {
     document.getElementById("code-content").value = code;
     compileToVirtual(code);

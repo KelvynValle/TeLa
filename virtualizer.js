@@ -1,6 +1,7 @@
 //add virtual objects in json array
 //convert virtual objects in line-code strings
 var json_data = { name: "test", age: 0, friends: [{ name: "alice", age: 0 }, { name: "john", age: 0 }] };
+var url_data = "http://www.test.com/test.html?user=carlos&age=20";
 var objects = [];
 var id_index_counter = 0;
 var code_residue = "";
