@@ -340,31 +340,31 @@
             <select id='phone-dimension' onchange='changeDimension(this.value);'>
                 <option disabled selected>Dimensões (mm)</option>
                 <!-- mobile -->
-                <option value='{"width":64, "height":129, "zoom":100}'>64 x 129</option>
-                <option value='{"width":73.4, "height":148, "zoom":100}'>73.4 x 148</option>
-                <option value='{"width":68.1, "height":148., "zoom":100}'>68.1 x 148.9</option>
-                <option value='{"width":73.4, "height":159.5, "zoom":80}'>73.4 x 159.5</option>
-                <option value='{"width":76.2, "height":153.5, "zoom":80}'>76.2 x 153.5</option>
-                <option value='{"width":75, "height":151.7, "zoom":80}'>75 x 151.7</option>
-                <option value='{"width":58.6, "height":123.8, "zoom":100}'>58.6 x 123.8</option>
-                <option value='{"width":67.1, "height":138.3, "zoom":100}'>67.1 x 138.3</option>
-                <option value='{"width":77.9, "height":158.2, "zoom":80}'>77.9 x 158.2</option>
-                <option value='{"width":70.7, "height":141.5, "zoom":80}'>70.7 x 141.5</option>
-                <option value='{"width":69.8, "height":136.6, "zoom":100}'>69.8 x 136.6</option>
-                <option value='{"width":65.9, "height":129.9, "zoom":100}'>65.9 x 129.9</option>
-                <option value='{"width":66.1, "height":125.3, "zoom":100}'>66.1 x 125.3</option>
-                <option value='{"width":58.6, "height":115.2, "zoom":100}'>58.6 x 115.2</option>
+                <option value='{"width":64, "height":129, "zoom":100, "mobile":true}'>64 x 129</option>
+                <option value='{"width":73.4, "height":148, "zoom":100, "mobile":true}'>73.4 x 148</option>
+                <option value='{"width":68.1, "height":148., "zoom":100, "mobile":true}'>68.1 x 148.9</option>
+                <option value='{"width":73.4, "height":159.5, "zoom":80, "mobile":true}'>73.4 x 159.5</option>
+                <option value='{"width":76.2, "height":153.5, "zoom":80, "mobile":true}'>76.2 x 153.5</option>
+                <option value='{"width":75, "height":151.7, "zoom":80, "mobile":true}'>75 x 151.7</option>
+                <option value='{"width":58.6, "height":123.8, "zoom":100, "mobile":true}'>58.6 x 123.8</option>
+                <option value='{"width":67.1, "height":138.3, "zoom":100, "mobile":true}'>67.1 x 138.3</option>
+                <option value='{"width":77.9, "height":158.2, "zoom":80, "mobile":true}'>77.9 x 158.2</option>
+                <option value='{"width":70.7, "height":141.5, "zoom":80, "mobile":true}'>70.7 x 141.5</option>
+                <option value='{"width":69.8, "height":136.6, "zoom":100, "mobile":true}'>69.8 x 136.6</option>
+                <option value='{"width":65.9, "height":129.9, "zoom":100, "mobile":true}'>65.9 x 129.9</option>
+                <option value='{"width":66.1, "height":125.3, "zoom":100, "mobile":true}'>66.1 x 125.3</option>
+                <option value='{"width":58.6, "height":115.2, "zoom":100, "mobile":true}'>58.6 x 115.2</option>
                 <!-- laptops -->
-                <option value='{"width":1366, "height":768, "zoom":10}'>1366 x 768</option>
-                <option value='{"width":1600, "height":900, "zoom":10}'>1600 x 900</option>
-                <option value='{"width":1920, "height":1080, "zoom":10}'>1920 x 1080</option>
-                <option value='{"width":2304, "height":1440, "zoom":10}'>2304 x 1440</option>
-                <option value='{"width":2560, "height":1600, "zoom":5}'>2560 x 1600</option>
-                <option value='{"width":2560, "height":1440, "zoom":5}'>2560 x 1440</option>
-                <option value='{"width":2880, "height":1800, "zoom":5}'>2880 x 1800</option>
-                <option value='{"width":3000, "height":2000, "zoom":5}'>3000 x 2000</option>
-                <option value='{"width":3200, "height":1800, "zoom":5}'>3200 x 1800</option>
-                <option value='{"width":3840, "height":2160, "zoom":5}'>3840 x 2160</option>
+                <option value='{"width":1366, "height":768, "zoom":10, "mobile":false}'>1366 x 768</option>
+                <option value='{"width":1600, "height":900, "zoom":10, "mobile":false}'>1600 x 900</option>
+                <option value='{"width":1920, "height":1080, "zoom":10, "mobile":false}'>1920 x 1080</option>
+                <option value='{"width":2304, "height":1440, "zoom":10, "mobile":false}'>2304 x 1440</option>
+                <option value='{"width":2560, "height":1600, "zoom":5, "mobile":false}'>2560 x 1600</option>
+                <option value='{"width":2560, "height":1440, "zoom":5, "mobile":false}'>2560 x 1440</option>
+                <option value='{"width":2880, "height":1800, "zoom":5, "mobile":false}'>2880 x 1800</option>
+                <option value='{"width":3000, "height":2000, "zoom":5, "mobile":false}'>3000 x 2000</option>
+                <option value='{"width":3200, "height":1800, "zoom":5, "mobile":false}'>3200 x 1800</option>
+                <option value='{"width":3840, "height":2160, "zoom":5, "mobile":false}'>3840 x 2160</option>
                 </select>
             <label class="label-description">Default unit:</label>
             <select onchange="if(this.value != 0){changeDefaultUnit(this.value, global_dimension);}" id="unit-select">

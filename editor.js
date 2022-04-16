@@ -38,11 +38,22 @@ function generateColorPallete() {
 }
 
 function setJSON() {
+    var data_screen = JSON.parse(document.getElementById("phone-dimension").value);
     var j_code = document.getElementById("json-content");
     if (j_code.value == "") {
         j_code.value = JSON.stringify(json_data);
     } else {
         json_data = JSON.parse(j_code.value);
+        json_data["mobile"] = data_screen.mobile;
+        if (json_data["mobile"]) {
+            json_data["width"] = (data_screen.width / 10) + "cm";
+            json_data["height"] = (data_screen.height / 10) + "cm";
+        } else {
+            json_data["width"] = data_screen.width + "px";
+            json_data["height"] = data_screen.height + "px";
+        }
+
+
     }
 }
 
@@ -92,7 +103,7 @@ function startEditor() {
     generateColorPallete();
     document.getElementById("global").addEventListener("mouseup", function() { dragUp(event) }, false);
     document.getElementById("global").addEventListener("mousemove", function() { dragMove(event) }, false);
-    document.getElementById("phone-dimension").value = '{"width":64, "height":129}';
+    document.getElementById("phone-dimension").selectedIndex = 1;
     changeDimension('{"width":64, "height":129, "zoom":100}');
 }
 

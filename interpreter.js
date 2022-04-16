@@ -1,5 +1,12 @@
 function interpret(container, data, code, clearContainer = true, edition = false) {
-    var mobile = /Mobi/.test(navigator.userAgent);
+
+    if (!edition) {
+        var mobile = /Mobi/.test(navigator.userAgent);
+        var size = window.screen;
+        data["width"] = size.width + "px";
+        data["height"] = size.height + "px";
+        data["mobile"] = mobile;
+    }
 
     data = addUrlParamethers(data);
     var templates = [];
