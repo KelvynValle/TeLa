@@ -1,4 +1,6 @@
 function interpret(container, data, code, clearContainer = true, edition = false) {
+    var mobile = /Mobi/.test(navigator.userAgent);
+
     data = addUrlParamethers(data);
     var templates = [];
     if (clearContainer) {
