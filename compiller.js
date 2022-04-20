@@ -3,7 +3,9 @@ function compiller(code) {
     var bytecode = "";
     for (var i = 0; i < lines.length; i++) {
         var code = [];
-        if (lines[i].includes('"')) {
+        if (lines[i].includes('(')) {
+            code = sliceParenthesis(lines[i]);
+        } else if (lines[i].includes('"')) {
             code = slice(lines[i]);
         } else {
             code = lines[i].split(" ");
@@ -109,6 +111,12 @@ function compiller(code) {
             case "delete":
                 bytecode += `d ${code[1]};`;
                 break;
+            case "marker":
+                bytecode += `m ${btoa(code[1])};`;
+                break;
+            case "goto":
+                bytecode += `g ${btoa(code[1])} ${btoa(code[3])};`;
+                break;
             case "template":
 
 
@@ -170,6 +178,32 @@ function slice(str) {
             arr.push("");
         } else {
             if (str[i] == '"') {
+                quote = !quote;
+            } else {
+                arr[arr.length - 1] += str[i];
+            }
+        }
+    }
+    return arr;
+}
+
+function sliceParenthesis(str) {
+    let arr = [];
+    let parenthesis_count = 0;
+    var quote = false;
+    arr.push("");
+    for (let i = 0; i < str.length; i++) {
+        if (parenthesis_count == 0 && str[i] == " " && !quote) {
+            arr.push("");
+        } else {
+
+            if (str[i] == "(") {
+                arr[arr.length - 1] += str[i];
+                parenthesis_count++;
+            } else if (str[i] == ")") {
+                arr[arr.length - 1] += str[i];
+                parenthesis_count--;
+            } else if (str[i] == '"') {
                 quote = !quote;
             } else {
                 arr[arr.length - 1] += str[i];

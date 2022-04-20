@@ -1,3 +1,15 @@
+/*
+    includes fontVariantLigatures: 
+*/
+
+var imported = document.createElement('script');
+imported.src = 'includes/booleval.js';
+document.head.appendChild(imported);
+
+/*
+    interpreter
+*/
+
 function interpret(container, data, code, clearContainer = true, edition = false) {
 
     if (!edition) {
@@ -115,9 +127,25 @@ function interpret(container, data, code, clearContainer = true, edition = false
                 var obj = document.getElementById(command[1]);
                 obj.remove();
                 break;
+            case "g":
+
+                if (checkCondition(command[2], data)) {
+                    let index = getMarker(bytecode, command[1]);
+                    i = index;
+                }
+
+                break;
         }
     }
     templating(templates, container, {}, "", -1, edition);
+}
+
+function checkCondition(expression, data) {
+    return boolEval(replaceVariable(atob(expression), data, 0));
+}
+
+function getMarker(lines, marker) {
+    return lines.indexOf(`m ${marker}`);
 }
 
 function addUrlParamethers(data) {
