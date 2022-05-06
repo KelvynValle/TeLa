@@ -1,4 +1,6 @@
 function compiller(code) {
+    code = convertIsGoto(code);
+    alert(code);
     var lines = code.split("\n");
     var bytecode = "";
     for (var i = 0; i < lines.length; i++) {
@@ -46,6 +48,11 @@ function compiller(code) {
                         break;
                 }
                 bytecode += `${code[2]} ${code[4] == 'global' ? 'g' : code[4]} ${code[1] == "template" ? code[6].replace("$", "") : ""};`;
+                break;
+            case "style":
+                bytecode += "c ";
+                bytecode += `${btoa(code[1])} `;
+                bytecode += `${btoa(code[2])} ${code[4] == 'global' ? 'g' : code[4]};`;
                 break;
             case "set":
                 bytecode += "s ";
@@ -98,6 +105,8 @@ function compiller(code) {
                     case "rotate":
                         bytecode += "o ";
                         break;
+                    case "style":
+                        bytecode += "y ";
                     default:
                         if (code.length == 4) {
                             bytecode += "$ ";
@@ -211,4 +220,131 @@ function sliceParenthesis(str) {
         }
     }
     return arr;
+}
+
+//goto and is/if (condition)
+
+function convertIsGoto(code, parent_block = "") {
+    var splited = code.split("\n");
+    for (var i = 0; i < splited.length; i++) {
+        while (splited[i][0] == " ") {
+            splited[i] = splited[i].slice(1, splited[i].length);
+        }
+    }
+    var current_block = 0;
+    var converted = "";
+    for (var i = 0; i < splited.length; i++) {
+        var line = [];
+        if (splited[i].includes('(')) {
+            line = sliceParenthesis(splited[i]);
+        } else if (splited[i].includes('"')) {
+            line = slice(splited[i]);
+        } else {
+            line = splited[i].split(" ");
+        }
+        if (line[0] == "is") {
+            current_block++;
+            var end_is = findEndIs(splited, i);
+            var current_so = 1;
+            while (i != end_is) {
+                if (hasNextSo(splited, i)) {
+                    converted += `goto "so${parent_block}.${current_block}.${current_so}" if !${getLogical(splited[i])}\n`;
+                    var index_next_so = indexNextSo(splited, i);
+                    converted += convertIsGoto(flatArray(splited, i + 1, index_next_so - 1), parent_block + "." + current_block + "." + current_so);
+                    converted += `goto "ok${parent_block}.${current_block}" if (1 == 1)\n`;
+                    converted += `marker "so${parent_block}.${current_block}.${current_so}"\n`;
+                    current_so++;
+                    i = index_next_so;
+                } else {
+                    converted += `goto "not${parent_block}.${current_block}" if !${getLogical(splited[i])}\n`;
+                    var index_next_so = indexNextSo(splited, i);
+                    converted += convertIsGoto(flatArray(splited, i + 1, index_next_so - 1), parent_block + "." + current_block + "." + current_so);
+                    converted += `marker "ok${parent_block}.${current_block}"\n`;
+                    current_block++;
+                    i = index_next_so;
+                }
+            }
+        } else {
+            converted += splited[i] + "\n";
+        }
+    }
+    return converted;
+}
+
+function flatArray(lines, start, end) {
+    end++;
+    var content = "";
+    for (var i = start; i < end; i++) {
+        content += lines[i] + "\n";
+    }
+    return content;
+}
+
+function getLogical(code) {
+    var values = [];
+    if (code.includes('(')) {
+        values = sliceParenthesis(code);
+    } else if (code.includes('"')) {
+        values = slice(code);
+    } else {
+        values = code.split(" ");
+    }
+    switch (values[0]) {
+        case "is":
+            return values[1];
+        default:
+            return values[2];
+    }
+}
+
+function findEndIs(code, index) {
+    let so_count = 0;
+    for (var i = index; i < code.length; i++) {
+        var line = code[i].split(" ");
+        if (line[0] == "is") {
+            so_count++;
+        } else if (line[0] == "ok") {
+            so_count--;
+        }
+        if (so_count == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+function hasNextSo(code, index) {
+    let so_count = 1;
+    index++;
+    for (var i = index; i < code.length; i++) {
+        var line = code[i].split(" ");
+        if (line[0] == "is") {
+            so_count++;
+        } else if (line[0] == "ok") {
+            so_count--;
+        }
+        if ((line[0] == "so" || line[0] == "not") && so_count == 1) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function indexNextSo(code, index) {
+    let so_count = 1;
+    index++;
+    for (var i = index; i < code.length; i++) {
+        var line = code[i].split(" ");
+        if (line[0] == "is") {
+            so_count++;
+        } else if (line[0] == "ok") {
+            so_count--;
+        }
+        if ((line[0] == "so" || line[0] == "not") && so_count == 1) {
+            return i;
+        } else if (line[0] == "ok" && so_count == 0) {
+            return i;
+        }
+    }
+    return -1;
 }

@@ -7,6 +7,12 @@ imported.src = 'includes/booleval.js';
 document.head.appendChild(imported);
 
 /*
+    Global variables
+*/
+
+var counter_is = 0;
+
+/*
     interpreter
 */
 
@@ -43,6 +49,17 @@ function interpret(container, data, code, clearContainer = true, edition = false
                 } else {
                     insertTemplate(command[1], command[2], command[3], templates, command[4] != undefined ? command[4] : "");
                 }
+                break;
+            case "c":
+                var obj = container;
+                if (command[3] != "g") {
+                    if (!insideTemplate(command[3], templates)) {
+                        obj = document.getElementById(replaceVariable(command[3], data, 0));
+                    } else {
+                        obj = false;
+                    }
+                }
+                obj.style[atob(command[1])] = replaceVariable(atob(command[2]), data, 0);
                 break;
             case "s":
                 var obj = container;
@@ -110,6 +127,9 @@ function interpret(container, data, code, clearContainer = true, edition = false
                             break;
                         case "m":
                             obj.style.margin = replaceVariable(atob(command[2]), data, 0);
+                            break;
+                        case "y":
+                            obj.style.cssText = replaceVariable(atob(command[2]), data, 0);
                             break;
                         case "o":
                             obj.style.transform = `rotate(${replaceVariable(atob(command[2]), data, 0)})`;
@@ -293,4 +313,16 @@ function addNewObject(command, pushTemplate, current_container, current_data, te
             }
             break;
     }
+}
+
+function convertIsIntoGoto(code) {
+
+}
+
+function endOfIs(lines, index) {
+
+}
+
+function rewriteIs(lines, start, end) {
+
 }

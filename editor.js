@@ -410,6 +410,11 @@ function showBox() {
     var height = obj[0].style.height;
 
     var bb = document.getElementById("bounding-box");
+    if (bb == undefined) {
+        document.getElementById('global').innerHTML += '<div id="bounding-box"><div class="control-box left-side" id="left-cursor"></div><div class="control-box right-side" id="right-cursor"></div><div class="control-box bottom-side" id="bottom-cursor"></div><div class="control-box top-side" id="top-cursor"></div><div class="control-box bottom-left-side" id="bottom-left-cursor"></div><div class="control-box top-left-side" id="top-left-cursor"></div><div class="control-box top-right-side" id="top-right-cursor"></div><div class="spin-box" id="spin-cursor">&olarr;</div></div>';
+        addDragAndDrop();
+        bb = document.getElementById("bounding-box");
+    }
     bb.style.display = "block";
     var rotation = `rotate(${getProperty(obj[0].id, "rotate")})`.replaceAll('"', '');
     bb.style.top = `calc(${top.replaceAll('"', '')} - 10px)`; //`calc(${top} - 10px)`;
