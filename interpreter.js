@@ -157,7 +157,7 @@ function interpret(container, data, code, clearContainer = true, edition = false
                 break;
         }
     }
-    templating(templates, container, {}, "", -1, edition);
+    templating(templates, container, data, "", -1, edition);
 }
 
 function checkCondition(expression, data) {
@@ -250,8 +250,13 @@ function templating(templates, container, current_data = {}, internal_container 
         if (templates[i].type == "p") {
             var dataset = iterator == -1 ? templates[i].template_array : templates[i].template_array[iterator];
             dataset = templates[i].for != undefined && templates[i].for != "" ? dataset[templates[i].for] : dataset;
+
             for (var j = 0; j < dataset.length; j++) {
                 var data = dataset[j];
+                var keys = Object.keys(current_data);
+                for (var k = 0; k < keys.length; k++) {
+                    data[keys[k]] = current_data[keys[k]];
+                }
                 var current_container = container;
                 if (templates[i].container != "g") {
                     current_container = document.getElementById(`${internal_container == "" ? replaceVariable(templates[i].container, dataset[j], 0) : internal_container}`);

@@ -1,6 +1,5 @@
 function compiller(code) {
     code = convertIsGoto(code);
-    alert(code);
     var lines = code.split("\n");
     var bytecode = "";
     for (var i = 0; i < lines.length; i++) {
