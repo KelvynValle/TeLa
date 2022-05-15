@@ -1,10 +1,14 @@
 /*
-    includes fontVariantLigatures: 
+    includes external scripts: 
 */
 
-var imported = document.createElement('script');
-imported.src = 'includes/booleval.js';
-document.head.appendChild(imported);
+var beval = document.createElement('script');
+beval.src = 'includes/booleval.js';
+document.head.appendChild(beval);
+
+var meval = document.createElement('script');
+meval.src = 'includes/mathEval.js';
+document.head.appendChild(meval);
 
 /*
     Global variables
@@ -140,6 +144,9 @@ function interpret(container, data, code, clearContainer = true, edition = false
                         setTemplate(command[3], `s ${command[1]} ${command[2]}`, templates);
                     } else {
                         data[command[3]] = replaceVariable(atob(command[2]), data, 0);
+                        if (isValidExpression(data[command[3]])) {
+                            data[command[3]] = mathEval(data[command[3]]);
+                        }
                     }
                 }
                 break;
@@ -320,14 +327,9 @@ function addNewObject(command, pushTemplate, current_container, current_data, te
     }
 }
 
-function convertIsIntoGoto(code) {
-
-}
-
-function endOfIs(lines, index) {
-
-}
-
-function rewriteIs(lines, start, end) {
-
+/*
+checks if is a valid expression
+*/
+function isValidExpression(expression) {
+    return (/^[0-9.,\-\+\*\^\\" "]+$/.test(expression));
 }
