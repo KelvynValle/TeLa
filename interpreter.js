@@ -49,6 +49,7 @@ function interpret(container, data, code, clearContainer = true, edition = false
                     }
                 }
                 if (current_container != false) {
+
                     addNewObject(command, true, current_container, data, templates, edition);
                 } else {
                     insertTemplate(command[1], command[2], command[3], templates, command[4] != undefined ? command[4] : "");
@@ -81,6 +82,7 @@ function interpret(container, data, code, clearContainer = true, edition = false
                                 case "DIV":
                                 case "LABEL":
                                 case "OPTION":
+                                case "SCRIPT":
                                     obj.innerHTML = replaceVariable(atob(command[2]), data, 0);
                                     break;
                                 case "IMG":
@@ -322,6 +324,12 @@ function addNewObject(command, pushTemplate, current_container, current_data, te
         case "p":
             if (pushTemplate) {
                 templates.push({ name: replaceVariable(command[2], current_data, 0), type: "p", container: command[3], objects: [], template_array: current_data[command[4]] });
+            }
+            break;
+        default:
+            if (command[1][0] == "/") {
+                let element = command[1].substring(1, command[1].length);
+                current_container.innerHTML += `<${element} id="${replaceVariable(command[2], current_data, 0)}" class="${edition == true ? 'edition' : ''}"  style="float:left;position:relative;"></${element}>`;
             }
             break;
     }

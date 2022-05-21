@@ -43,7 +43,9 @@ function compiller(code) {
                         bytecode += "l ";
                         break;
                     default:
-
+                        if (code[1][0] == "\'") {
+                            bytecode += "/" + code[1].substring(1, code[1].length - 1) + " ";
+                        }
                         break;
                 }
                 bytecode += `${code[2]} ${code[4] == 'global' ? 'g' : code[4]} ${code[1] == "template" ? code[6].replace("$", "") : ""};`;
